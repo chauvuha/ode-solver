@@ -6,7 +6,7 @@ Build and train a neural network (NN) to use pattern matching and Physics-Inform
 ## Members  
 - Eve Zeng  
 - Chau Vu  
-- Dualeh2  
+- Dualeh<sup>2</sup>  
 - Sultan Al Dawoodi  
 
 ## Outline  
