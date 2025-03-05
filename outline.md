@@ -1,8 +1,5 @@
 # Differential Equation Solver
 
-## Project Scope  
-Build and train a neural network (NN) to use pattern matching and Physics-Informed Neural Network (PINN) formalisms to predict compact approximations of Ordinary Differential Equations (ODEs).  
-
 ## Members  
 - Eve Zeng  
 - Chau Vu  
