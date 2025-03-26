@@ -4,35 +4,43 @@
 - Eve Zeng  
 - Chau Vu  
 - Dualeh<sup>2</sup>  
-- Sultan Al Dawoodi  
+- Sultan Aldawodi 
 
 
 
 ## Project Outline
 
-Abstract
+**Abstract
+
 We will summarize the motivation, methods, and results of our project. (To Be Written Later)
 
-Introduction
+**Introduction
+
 We will introduce Ordinary Differential Equations (ODEs) and explain their importance in modeling real-world systems. We will motivate the use of neural networks, especially Physics-Informed Neural Networks (PINNs), as a way to solve ODEs and improve interpretability.
 
-Ethics Discussion
+**Ethics Discussion
+
 We will address the ethical considerations of releasing a public-facing solver, including risks of academic dishonesty. We will also explain our mitigation strategies, such as promoting transparency and step-by-step breakdowns, to emphasize the tool’s use as a learning aid rather than a shortcut.
 
-Related Works
+**Related Works
+
 We will review prior research on neural network-based differential equation solvers. This will include papers on PINNs, loss function techniques, analytic approximations, and PDE solvers. We will compare these to our own project, which combines PINNs with pattern matching and aims for public accessibility and interpretability.
 
-Methods
+**Methods
+
 We will describe the technical aspects of our project, including how we train the neural networks, what datasets we use, and how we evaluate results. 
 
-Discussion/Results
+**Discussion/Results
+
 We will present and analyze the performance of different neural network implementations. We will discuss how closely their solutions match traditional methods, highlight any limitations or failures, and evaluate the overall educational value of the system.
 
-Conclusion/Future Work
+**Conclusion/Future Work
+
 We will summarize our contributions and findings, reiterating our focus on interpretability and accessibility. We will also outline future directions, such as expanding to PDEs, refining the interface, or improving model generalizability.
 
-References
-We will list all cited works using markdown footnotes, properly formatted. This includes the related papers on PINNs, PDEs, MathWorks implementations, and other neural network approaches
+**References
+
+We will list all cited works using markdown footnotes, properly formatted. This includes the related papers on PINNs, PDEs, MathWorks implementations, and other neural network approaches.
 
 
 
@@ -44,7 +52,7 @@ ODEs (ordinary differential equations) are an important way of modeling the worl
 
 ## Related Work
 
-Prior research has explored various methods for solving ODEs using neural networks. Some studies introduced PINNs to solve first- and second-order ODEs, highlighting their usefulness in physics simulations and their ability to incorporate physical laws directly into the model’s structure (1). Other studies expanded on this method by modifying the loss function to include the differential equation itself, allowing the model to learn to satisfy the equation rather than simply fit example data points (2). MathWorks presented a different strategy, using neural networks to produce closed-form approximations of ODE solutions, supported by a training process that involves generating data, defining the network, and customizing the loss function (3). Additionally, researchers have applied similar techniques to Partial Differential Equations (PDEs), training models on randomly sampled space and time points to approximate solutions where no analytical answers exist (4). Together, these works show the versatility and potential of neural networks in solving both ODEs and PDEs, laying the groundwork for our own project. 
+Prior research has explored various methods for solving ODEs using neural networks. Some studies introduced PINNs to solve first- and second-order ODEs, highlighting their usefulness in physics simulations and their ability to incorporate physical laws directly into the model’s structure[^1]. Other studies expanded on this method by modifying the loss function to include the differential equation itself, allowing the model to learn to satisfy the equation rather than simply fit example data points[^2]. MathWorks presented a different strategy, using neural networks to produce closed-form approximations of ODE solutions, supported by a training process that involves generating data, defining the network, and customizing the loss function[^3]. Additionally, researchers have applied similar techniques to Partial Differential Equations (PDEs), training models on randomly sampled space and time points to approximate solutions where no analytical answers exist[^4]. Together, these works show the versatility and potential of neural networks in solving both ODEs and PDEs, laying the groundwork for our own project.
 
 
 ## Project Design
@@ -64,12 +72,11 @@ In conclusion, our project expands on existing research by integrating pattern m
 
 ## References
 
-[^1]: Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. arXiv preprint arXiv:2302.12260. [https://arxiv.org/abs/2302.12260]
+[^1]: Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. arXiv preprint arXiv:2302.12260. [View paper](https://arxiv.org/abs/2302.12260)
 
-[^2]: Zang, Y., Bao, G., Ye, X., & Zhou, H. (2020). *Weak adversarial networks for high-dimensional partial differential equations*. Neurocomputing, 399, 305-315. 
-[https://www.sciencedirect.com/science/article/abs/pii/S0021999118305527]
+[^2]: Zang, Y., Bao, G., Ye, X., & Zhou, H. (2020). *Weak adversarial networks for high-dimensional partial differential equations*. Neurocomputing, 399, 305–315. [View paper](https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909)
 
-[^3]: MathWorks. (n.d.). *Solve ODEs Using a Neural Network*. [https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html]
+[^3]: MathWorks. (n.d.). *Solve ODEs Using a Neural Network*. [View paper](https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html)
 
-[^4]: Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. Journal of Computational Physics, 378, 686-707. 
-[https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909]
+[^4]: Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. *Journal of Computational Physics*, 378, 686–707. [View paper](https://www.sciencedirect.com/science/article/pii/S0021999118305527)
+

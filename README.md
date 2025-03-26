@@ -7,7 +7,7 @@ Build and train a neural network (NN) to use pattern matching and Physics-Inform
 - Eve Zeng  
 - Chau Vu  
 - Dualeh<sup>2</sup>  
-- Sultan Al Dawoodi  
+- Sultan Aldawodi  
 
 ## Outline  
 We are creating and training a neural network to solve differential equations. Being able to solve ODEs is valuable for modeling complex systems in mathematics, physics, and various other fields. The use of NN in solving differential equations is an ongoing research effort with connections to cutting-edge advancements. Differential equations rely heavily on pattern matching, and some have no analytical solutions. NNs can help find the most accurate and simple solution relevant to the problem, potentially providing either an analytical solution or a simple and accurate approximation.  
