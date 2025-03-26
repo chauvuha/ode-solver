@@ -23,7 +23,9 @@ We will address the ethical considerations of releasing a public-facing solver, 
 We will review prior research on neural network-based differential equation solvers. This will include papers on PINNs, loss function techniques, analytic approximations, and PDE solvers. We will compare these to our own project, which combines PINNs with pattern matching and aims for public accessibility and interpretability.
 
 ### Methods
-We will describe the technical aspects of our project, including how we train the neural networks, what datasets we use, and how we evaluate results.
+The primary software we use to implement the PINN is TensorFlow and Keras. The neural network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function. We will be training using Jupyter Notebook or Google Collab. For the dataset, we constructed training data by sampling from various ODEs. For example, for a first-order ODE, such as dydx+y=0. The exact solutions for it, like y(x)=e^(−x) were used for comparison. The dataset consists of 100-2000 data points sampled from a defined domain range (e.g., [0, 5] or [-2, 2]). The model is trained to minimize the difference between the predicted solution and the exact solution by updating the network’s parameters using backpropagation. Some of the more challenging parts of this project will be trying to understand the structure of the NN and implementing it to our use. For PINNs, the loss function separately considers both the differential equation solution value and its initial condition value relative to the expected. Our loss function is thus complicated and could be hard to debug. If all goes well, we could explore the possibilities of modifying the loss function or the other training procedures to compare the results. 
+
+
 
 ### Discussion/Results
 We will present and analyze the performance of different neural network implementations. We will discuss how closely their solutions match traditional methods, highlight any limitations or failures, and evaluate the overall educational value of the system.
