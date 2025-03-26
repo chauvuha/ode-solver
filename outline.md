@@ -10,38 +10,29 @@
 
 ## Project Outline
 
-**Abstract
-
+### Abstract
 We will summarize the motivation, methods, and results of our project. (To Be Written Later)
 
-**Introduction
-
+### Introduction
 We will introduce Ordinary Differential Equations (ODEs) and explain their importance in modeling real-world systems. We will motivate the use of neural networks, especially Physics-Informed Neural Networks (PINNs), as a way to solve ODEs and improve interpretability.
 
-**Ethics Discussion
-
+### Ethics Discussion
 We will address the ethical considerations of releasing a public-facing solver, including risks of academic dishonesty. We will also explain our mitigation strategies, such as promoting transparency and step-by-step breakdowns, to emphasize the tool’s use as a learning aid rather than a shortcut.
 
-**Related Works
-
+### Related Works
 We will review prior research on neural network-based differential equation solvers. This will include papers on PINNs, loss function techniques, analytic approximations, and PDE solvers. We will compare these to our own project, which combines PINNs with pattern matching and aims for public accessibility and interpretability.
 
-**Methods
+### Methods
+We will describe the technical aspects of our project, including how we train the neural networks, what datasets we use, and how we evaluate results.
 
-We will describe the technical aspects of our project, including how we train the neural networks, what datasets we use, and how we evaluate results. 
-
-**Discussion/Results
-
+### Discussion/Results
 We will present and analyze the performance of different neural network implementations. We will discuss how closely their solutions match traditional methods, highlight any limitations or failures, and evaluate the overall educational value of the system.
 
-**Conclusion/Future Work
-
+### Conclusion/Future Work
 We will summarize our contributions and findings, reiterating our focus on interpretability and accessibility. We will also outline future directions, such as expanding to PDEs, refining the interface, or improving model generalizability.
 
-**References
-
+### References
 We will list all cited works using markdown footnotes, properly formatted. This includes the related papers on PINNs, PDEs, MathWorks implementations, and other neural network approaches.
-
 
 
 
