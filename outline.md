@@ -33,15 +33,15 @@ The primary software we use to implement the PINN is TensorFlow and Keras. The n
 
 For the dataset, we constructed training data by sampling from various ODEs. For example, for a first-order ODE, such as:
 
-\[
+$$
 \frac{dy}{dx} + y = 0
-\]
+$$
 
 The exact solution for it, like:
 
-\[
+$$
 y(x) = e^{-x}
-\]
+$$
 
 was used for comparison.
 
