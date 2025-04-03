@@ -29,7 +29,7 @@ We will review prior research on neural network-based differential equation solv
 
 ### Methods
 
-The primary software we use to implement the PINN is TensorFlow and Keras. The neural network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function. We will be training using Jupyter Notebook or Google Colab. 
+The primary software we use to implement the PINN is [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/). The neural network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function. We will be training using Jupyter Notebook or Google Colab. 
 
 For the dataset, we constructed training data by sampling from various ODEs. For example, for a first-order ODE, such as:
 
