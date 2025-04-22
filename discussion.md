@@ -61,6 +61,17 @@ After training these Neural Networks, we will again generate another set of data
 We will compare our base type differential equation to the literature results, expecting to perform less accurately due to less data. We will also compare the accuracy between each type of NN, and decipher the potential reasons that one does better or worse. 
 In the future, we would spend more time to figure out how to generalize our neural network to more types of equations.
 
+### Results
+1. PINNs built by hand (Non-Keras or XDE):
+- We found that this version is significantly less accurate than others because:
++ In our loss function, instead of using tf.GradientTape(u,t) like the Keras version, we use a finite‐difference stencil dNN ≈ (g(x+ε) − g(x)) / ε , which is slower, less stable, and inherently not reliable, since accuracy critically depends on choosing an optimal ε (too large and you miss detail; too small and floating‑point noise dominates).
++ We’re not using tf.keras.Sequential, a model that has been developed and optimized for these tasks, but manually define our weights/biases and tf.matmul calls so it might be slower and more error-prone while training.
+
+- For this model, our loss function is designed to use a predefined f(x) function, which limits the model to solving equations that involve only x. As a result, the model is less flexible because it cannot deal with ODEs that include both x and y or more variable interactions.
+
+[Add the graph here]
+
+
 ### Conclusion/Future Work
 We will summarize our contributions and findings, reiterating our focus on interpretability and accessibility. We will also outline future directions, such as expanding to PDEs, refining the interface, or improving model generalizability.
 
