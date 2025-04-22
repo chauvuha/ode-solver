@@ -62,14 +62,20 @@ We will compare our base type differential equation to the literature results, e
 In the future, we would spend more time to figure out how to generalize our neural network to more types of equations.
 
 ### Results
-1. PINNs built by hand (Non-Keras or XDE):
-- We found that this version is significantly less accurate than others because:
-+ In our loss function, instead of using tf.GradientTape(u,t) like the Keras version, we use a finite‐difference stencil dNN ≈ (g(x+ε) − g(x)) / ε , which is slower, less stable, and inherently not reliable, since accuracy critically depends on choosing an optimal ε (too large and you miss detail; too small and floating‑point noise dominates).
-+ We’re not using tf.keras.Sequential, a model that has been developed and optimized for these tasks, but manually define our weights/biases and tf.matmul calls so it might be slower and more error-prone while training.
+1. **PINNs built by hand (Non-Keras or XDE):**
+   - We found that this version is significantly less accurate than others because:
+     + In our loss function, instead of using `tf.GradientTape(u, t)` like the Keras version, we use a finite‐difference stencil \( dNN \approx \frac{g(x + \epsilon) - g(x)}{\epsilon} \), which is slower, less stable, and inherently unreliable. Accuracy critically depends on choosing an optimal \( \epsilon \); if it’s too large, you miss details, and if it’s too small, floating-point noise dominates.
+     + We’re not using `tf.keras.Sequential`, a model that has been developed and optimized for these tasks. Instead, we manually define our weights/biases and `tf.matmul` calls, which might be slower and more error-prone during training.
 
-- For this model, our loss function is designed to use a predefined f(x) function, which limits the model to solving equations that involve only x. As a result, the model is less flexible because it cannot deal with ODEs that include both x and y or more variable interactions.
+   - For this model, our loss function is designed to use a predefined \( f(x) \) function, which limits the model to solving equations that involve only \( x \). As a result, the model is less flexible because it cannot handle ODEs that include both \( x \) and \( y \) or other variable interactions.
 
 [Add the graph here]
+
+2. **Keras PINNs:**
+
+3. **DeepXDE PINNs:**
+
+
 
 
 ### Conclusion/Future Work
