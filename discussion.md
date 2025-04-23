@@ -77,8 +77,8 @@ In the future, we would spend more time to figure out how to generalize our neur
   However, problems arise when we try other equations that are not periodic. It is hard to normalize the equation when it goes to infinity, but not normalizing it could risk other problems to the activation function blowing up or going to zero. Thus, this is a problem that needs to be addressed for a better model of training all kinds of differential equation NN, not just the periodic ones. 
 
   <p align="center">
-    <img src="keras_loss.jpg" alt="Keras Loss Curve" width="45%" />
-    <img src="keras_train.jpg" alt="Keras Prediction vs Ground Truth" width="45%" />
+    <img src="keras_loss.png" alt="Keras Loss Curve" width="45%" />
+    <img src="keras_train.png" alt="Keras Prediction vs Ground Truth" width="45%" />
   </p>
 
 3. **DeepXDE PINNs:**
