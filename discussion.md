@@ -145,7 +145,7 @@ In terms of research, specifically in the field of neural networks, our team lea
 <!-- blank line keeps rendering tidy -->
 
 - **Amini et al. (2023).** *Solving differential equations with Deep Learning: A beginner’s guide.* arXiv 2302.12260.  
-  <https://arxiv.org/abs/2302.12260>
+  <a href="https://arxiv.org/abs/2302.12260"> </a>
 
 - **Zang et al. (2020).** *Weak adversarial networks for high‑dimensional partial differential equations.* *Neurocomputing*, 399, 305‑315.  
   <https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909>
