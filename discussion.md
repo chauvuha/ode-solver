@@ -149,10 +149,10 @@ In terms of research, specifically in the field of neural networks, our team lea
 
 [^4]: Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. *Journal of Computational Physics*, 378, 686–707. [View paper](https://www.sciencedirect.com/science/article/pii/S0021999118305527)
 
-[^5]: *DeepXDE documentation.* <https://deepxde.readthedocs.io/en/latest/>
+[^5]: *DeepXDE documentation.* [View](https://deepxde.readthedocs.io/en/latest/)
 
-[^6]: *Keras Model API.* <https://keras.io/api/models/model/>
+[^6]: *Keras Model API.* [View](https://keras.io/api/models/model/)
 
-[^7]: *Hand‑built PINN Colab example.* <https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing>
+[^7]: *Hand‑built PINN Colab example.* [View](https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing)
 
-[^8]: *Keras & DeepXDE comparison Colab.* <https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing>
+[^8]: *Keras & DeepXDE comparison Colab.* [View](https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing)
