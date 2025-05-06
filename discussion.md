@@ -62,39 +62,72 @@ Prior research has explored various methods for solving ODEs using neural networ
 </details>
 
 <details>
-<summary>Methods</summary>
+  <summary>Methods</summary>
 
-The primary software we use to implement the PINN is **TensorFlow** and **Keras**.  
-We will train **three PINNs**: a manually‑built neural network, a Keras‑based
-PINN using automatic differentiation, and a DeepXDE model that automates the
-setup and training of the neural network.  
-The hand‑built network is constructed with Keras `Dense` and `Input` layers,
-with the **Adam** optimizer minimising a loss that mixes the residual error
-from the differential equation with the error from initial or boundary
-conditions.
+  The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs: a manually-built neural network, a Keras-based PINN using automatic differentiation, and a DeepXDE library that automates the setup and training of the neural network. The hand-built network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function, which combines the residual of the differential equation with the error from the initial or boundary conditions.
 
-For the dataset, we sample training points from various ODEs.  
-For example, for a first‑order ODE such as \(dy/dx + y = 0\), we compare
-against the exact solution \(y(x)=e^{-x}\).  
-Each dataset contains 100–2000 points drawn from a domain like \([0,5]\) or
-\([-2,2]\).
+  For the dataset, we constructed training data by sampling from various ODEs. For example, for the first-order ODE, such as  
+  \[
+    \frac{dy}{dx} + y = 0,
+  \]  
+  the exact solution  
+  \[
+    y(x) = e^{-x}
+  \]  
+</details>
 
-During training, the model minimises the difference between the network’s
-prediction and the exact solution by updating parameters through
-back‑propagation.
+<details>
+<summary><strong>Discussion</strong></summary>
 
-Some key challenges are understanding the network structure, implementing it
-for our use case, and tuning a loss that separately weighs the differential
-equation residual and the initial‑condition term.  
-Because this composite loss can be difficult to debug, we will examine the
-loss curve and training process for each model and compare accuracy,
-convergence speed, and implementation effort.  
-This side‑by‑side evaluation will highlight the strengths and weaknesses of
-each approach.
+We are creating our own data set, with methods provided by <a href="https://github.com/rtqichen/torchdiffeq/blob/master/README.md"><i>torchdiffeq</i></a>, and trained our PINN with these specifically generated data set.  
+We are implementing this PINN network to train three different data sets, corresponding to three different types of differential equations, based on <a href="https://github.com/rtqichen/torchdiffeq">these tests</a>.  
+We will also create a graph visualization to show how well our neural network’s predictions align with the ground truth solutions of the differential equation during the training process.  
+After training these Neural Networks, we will again generate another set of data by similar methods, and test each of these three networks on their accuracy.  
+We will compare our base type differential equation to the literature results, expecting to perform less accurately due to less data. We will also compare the accuracy between each type of NN, and decipher the potential reasons that one does better or worse.  
+In the future, we would spend more time to figure out how to generalize our neural network to more types of equations.
 
 </details>
 
 
+<details>
+<summary><strong>Results</strong></summary>
+
+1. **PINNs built by hand (Non‑Keras or XDE):**  
+   - We found that this version is significantly less accurate than others because:  
+     + In our loss function, instead of using `tf.GradientTape(u, t)` like the Keras version, we use a finite‐difference stencil dNN ≈ (g(x+ε) − g(x)) / ε, which is slower, less stable, and inherently unreliable. Accuracy critically depends on choosing an optimal \( \epsilon \); if it’s too large, you miss details, and if it’s too small, floating‑point noise dominates.  
+     + We’re not using `tf.keras.Sequential`, a model that has been developed and optimized for these tasks. Instead, we manually define our weights/biases and `tf.matmul` calls, which might be slower and more error‑prone during training.  
+
+   - For this model, our loss function is designed to use a predefined \( f(x) \) function, which limits the model to solving equations that involve only \( x \). As a result, the model is less flexible because it cannot handle ODEs that include both \( x \) and \( y \) or other variable interactions.
+
+   <img src="manual_pinn.png" width="60%" />
+
+2. **Keras PINNs:**  
+   - The Keras package has existing functions that provides established NN models. We used the Sequential model provided by the Keras package.  
+   This model did well with our given example of a sine wave; the original function and the NN approximation matched almost perfectly.  
+   - However, problems arise with equations that are not periodic. It is hard to normalise an equation that goes to infinity; not normalising risks the activation function blowing up or collapsing to zero. This must be addressed for a model that handles *all* differential equations, not just periodic ones.
+
+   <p align="center">
+     <img src="keras_loss.png"  alt="Keras Loss Curve"           width="45%" />
+     <img src="keras_train.png" alt="Keras Prediction vs Truth"  width="45%" />
+   </p>
+
+3. **DeepXDE PINNs:**  
+   <b>DeepXDE output for sin(2π t):</b>
+
+   <p align="center">
+     <img src="deepxde_loss.jpg"  alt="DeepXDE Loss Curve"          width="45%" />
+     <img src="deepxde_train.jpg" alt="DeepXDE Prediction vs Truth" width="45%" />
+   </p>
+
+   - These results look spot‑on. The loss curves drop smoothly for both train and test, and the solution plot shows that the PINN learned  
+     \( \tfrac{dy}{dt} = \sin(2\pi t), \; y(0)=1 \) almost perfectly.  
+     The red dashed line overlaps the true black curve and the training dots.
+
+   - **DeepXDE** makes the workflow almost trivial: we define the ODE, domain, and initial condition in a few lines; DeepXDE builds the loss with automatic differentiation and even lets us plug in an exact solution for on‑the‑fly error checks. A single call to `dde.saveplot()` provides loss curves and prediction‑vs‑truth plots without extra code.
+
+   - By contrast, replicating this in pure Keras or a hand‑rolled network would require custom loss functions, manual gradient code, and bespoke training loops. DeepXDE abstracts that away, letting us focus on modelling rather than boilerplate—making it the fastest, most reliable path for ODE/PDE problems.
+
+</details>
 
 
 
