@@ -64,7 +64,7 @@ Prior research has explored various methods for solving ODEs using neural networ
 <details>
 <summary><strong>Methods</strong></summary>
 
-<!-- you must have a blank line here -->
+<!-- blank line after summary is important -->
 
 The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs:
 
@@ -72,26 +72,22 @@ The primary software we use to implement the PINN is TensorFlow and Keras. We wi
 2. A Keras-based PINN using automatic differentiation  
 3. A DeepXDE model that automates the entire setup and training process
 
-Our **hand-built** network is constructed with Keras’s `Dense` and `Input` layers. We use the Adam optimizer to minimize a composite loss that mixes:
+Our **hand-built** network is constructed with Keras’s `Dense` and `Input` layers. We use the Adam optimizer to minimize a composite loss that mixes
 
 - the residual error of the differential equation itself, and  
-- the error from any initial or boundary conditions
+- the error from any initial or boundary conditions.
 
 For our **training data**, we sample points from various ODEs. For example, consider the first‐order ODE:
 
-\[  
-\frac{dy}{dx} + y = 0  
+\[
+\frac{dy}{dx} + y = 0
 \]
-
-<!-- blank line is crucial -->
 
 We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,2]\), and compare against the exact solution:
 
-\[  
-y(x) = e^{-x}  
+\[
+y(x) = e^{-x}
 \]
-
-<!-- another blank line -->
 
 Depending on the experiment, each dataset contains between 100 and 2000 points.
 
@@ -99,7 +95,7 @@ During training, we backpropagate through both the ODE residual and any initial-
 
 - **Understanding and debugging** a loss that mixes two objectives.  
 - **Implementing** differentiation by hand for the manual PINN, rather than relying on `tf.GradientTape`.  
-- **Maintaining stability** when choosing discretization step sizes and learning rates.
+- **Maintaining stability** when choosing discretization step-sizes and learning rates.
 
 For each of the three implementations, we will:
 
@@ -114,11 +110,6 @@ This side-by-side analysis will highlight the strengths and weaknesses of:
 - A DeepXDE PINN that abstracts away most boilerplate
 
 </details>
-
-
-
-
-
 
 
 
