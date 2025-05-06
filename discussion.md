@@ -34,6 +34,9 @@ Physics‐informed neural networks (PINNs) offer a mesh‐free, data‐efficient
 
 </details>
 
+
+
+
 <details>
 <summary>Introduction</summary>
 
