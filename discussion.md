@@ -62,55 +62,28 @@ Prior research has explored various methods for solving ODEs using neural networ
 </details>
 
 <details>
-<summary><strong>Methods</strong></summary>
+  <summary>Methods</summary>
 
-We implement our physics‑informed neural networks (PINNs) in **TensorFlow / Keras**, training three
-variants:
+  The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs: a manually-built neural network, a Keras-based PINN using automatic differentiation, and a DeepXDE library that automates the setup and training of the neural network. The hand-built network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function, which combines the residual of the differential equation with the error from the initial or boundary conditions.
 
-1. **Hand‑coded PINN** – a small feed‑forward net built from `Dense` layers and finite‑difference gradients.  
-2. **Keras PINN** – the same architecture, but differentiated with `tf.GradientTape`.  
-3. **DeepXDE PINN** – uses DeepXDE to declare the ODE, domain and IC/BC in just a few lines.
+  For the dataset, we constructed training data by sampling from various ODEs. For example, for the first-order ODE, such as  
+  \[
+    \frac{dy}{dx} + y = 0,
+  \]  
+  the exact solution  
+  \[
+    y(x) = e^{-x}
+  \]  
+  was used for comparison. The dataset consists of 100–2000 points sampled from a domain (e.g., \([0,5]\) or \([-2,2]\)). The model is trained to minimize the difference between its predicted solution and the exact solution by backpropagating through both the ODE residual and any initial/boundary condition terms.
 
----
-
-### Training data
-
-For each model we sample \(100\!-\!2000\) points from simple ODEs.  
-A reference example is the first‑order equation \(dy/dx + y = 0\), whose exact solution is \(y(x)=e^{-x}\).  
-We draw noisy pairs \((x_i,y_i)\) on domains such as \([0,5]\) or \([-2,2]\).
-
----
-
-### Loss formulation
-
-The loss combines:
-
-- an **ODE residual term** (how well \(f_\theta\) satisfies the differential equation), and  
-- an **IC/BC term** (how well it meets initial or boundary conditions).
-
-We minimise \(\;L = L_{\text{ODE}} + \lambda\,L_{\text{IC}}\) with Adam.
-
----
-
-### Practical challenges
-
-- Balancing the two loss terms so neither dominates.  
-- Hand‑rolling finite differences in the manual PINN (no `tf.GradientTape`).  
-- Choosing stable step sizes and learning rates.
-
----
-
-### What we evaluate
-
-1. Convergence curves for \(L_{\text{ODE}}\) and \(L_{\text{IC}}\).  
-2. Final error versus the known solution.  
-3. Training speed and code complexity.
-
-This side‑by‑side comparison highlights the trade‑offs between a fully
-hand‑coded PINN, an automatic‑differentiation Keras PINN, and the high‑level
-DeepXDE approach.
+  Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
+  \[
+    \mathcal{L} = \mathcal{L}_\text{ODE} + \lambda\,\mathcal{L}_\text{IC/BC}.
+  \]
+  For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
 
 </details>
+
 
 
 
