@@ -133,15 +133,20 @@ almost perfectly. The red dashed line overlaps the true black curve and the trai
 This project opens up opportunities for potential future work. One key direction we are focusing on is creating better models that can approximate higher-order equations and more complex systems. Another potential feature, given more time, would be to experiment with developing a combined model trained on the results from these individual models, capable of determining which model best fits the function type we are approximating. Additionally, we would like to create a web-based version of our models to showcase our results and more effectively communicate the differences between them.
 </details>
 
+<details>
+<summary>Reflection</summary>
+
+In terms of research, specifically in the field of neural networks, our team learned a lot about PINNs, not only on how to implement these models, but also to compare and contrast their performances. We also trained our skills in finding literature, trying out sample codes, and refactoring these open-source model for our project’s goals. In addition to that, we also learned how to work in a group, plan tasks for everyone, and reprioritize as needed.
+</details>
+
+
+
+
+
+In terms of research, specifically in the field of neural networks, our team learned a lot about PINNs, not only on how to implement these models, but also to compare and contrast their performances. We also trained our skills in finding literature, trying out sample codes, and refactoring these open-source model for our project’s goals. In addition to that, we also learned how to work in a group, plan tasks for everyone, and reprioritize as needed. 
 ## Project Design
 
 Our project distinguishes itself from existing research in neural network-based differential equation solvers through its focus on both pattern matching and Physics-Informed Neural Network (PINN) methodologies. While prior work has explored neural networks for solving ODEs, much of it has concentrated on either direct function approximation or strictly physics-informed approaches. Our approach integrates both perspectives, allowing us to evaluate their respective strengths and limitations in solving ODEs. Additionally, rather than solely focusing on performance benchmarks, we aim to compare how neural network-generated solutions align with traditional human-solving strategies, providing a deeper interpretability component. That way users can both get a solution to a differential equation and see the steps taken to solve it. That way, even if the solution is incorrect, the user can still find where the neural network went wrong through visual compute graphs.
-
-
-## Conclusion
-
-In conclusion, our project expands on existing research by integrating pattern matching and PINN methodologies while prioritizing interpretability and accessibility. By providing visual compute graphs and a free web-based interface, we make neural network-based ODE solving both transparent and widely available. While misuse is a concern, the educational benefits like helping users understand and verify solutions outweigh the risks, making this a valuable tool for students and researchers alike.
-
 
 ## References
 
