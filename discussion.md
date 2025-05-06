@@ -13,43 +13,18 @@
 
 
 
-## Project Outline
+<details>
+  <summary><strong>Abstract</strong></summary>
+  <p>
+    Physics‐informed neural networks (PINNs) offer a mesh‐free, data‐efficient approach to obtaining
+    approximate solutions of ordinary differential equations (ODEs) by embedding the governing equations directly into the loss function of a neural network. In this project, we compare three distinct PINN implementations for solving benchmark ODEs: (i) a from‐scratch fully connected network coded in plain Python, (ii) a Keras‐based PINN leveraging TensorFlow’s high‐level APIs, and (iii) a DeepXDE model utilizing its specialized automatic differentiation and domain‐decomposition features. These models were trained to solve simple ODEs, and their results were compared. The Keras and DeepXDE models performed with high accuracy, though the construction of the network needs to be modified with initial conditions to accommodate different scenarios. Still, these networks and their results
+    demonstrate the reliable use of PINNs to solve ordinary differential equations and have a promising future in tackling complex partial differential equations with no analytical solutions.
+  </p>
+</details>
 
-### Abstract
-We will summarize the motivation, methods, and results of our project. (To Be Written Later)
+## Introduction
+ODEs (ordinary differential equations) are an important way of modeling the world in different fields such as economics, biology, and physics. For example, the physics of fluid dynamics is governed by the Navier-Stokes partial differential equations.  Having accurate solutions to these equations gives power in analyzing complex systems. Our project focuses on testing a branch of neural network formalism called PINN (Physics-informed neural networks) in its ability to solve differential equations, such that these equations produce simple and accurate results for difficult problems. Some of the hardest differential equations cannot be analytically solved, so having a reliable approximate solution from a neural network can help build complex models and systems. Our project tests three different kinds of PINNs, starting with a simple, made-from-scratch model using a fully connected neural network, to using the Keras API model developed by Python, and finally to a more complicated model by Deep XDE. Our tests on simpler ordinary differential equations show promising signs of utilizing this model in more complicated settings with partial differential equations in the future.
 
-### Introduction
-We will introduce Ordinary Differential Equations (ODEs) and explain their importance in modeling real-world systems. We will motivate the use of neural networks, especially Physics-Informed Neural Networks (PINNs), as a way to solve ODEs and improve interpretability.
-
-### Ethics Discussion
-We will address the ethical considerations of releasing a public-facing solver, including risks of academic dishonesty. We will also explain our mitigation strategies, such as promoting transparency and step-by-step breakdowns, to emphasize the tool’s use as a learning aid rather than a shortcut.
-
-### Related Works
-We will review prior research on neural network-based differential equation solvers. This will include papers on PINNs, loss function techniques, analytic approximations, and PDE solvers. We will compare these to our own project, which combines PINNs with pattern matching and aims for public accessibility and interpretability.
-
-### Methods
-
-The primary software we use to implement the PINN is [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/). The neural network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function. We will be training using Jupyter Notebook or Google Colab. 
-
-For the dataset, we constructed training data by sampling from various ODEs. For example, for a first-order ODE, such as:
-
-$$
-\frac{dy}{dx} + y = 0
-$$
-
-The exact solution for it, like:
-
-$$
-y(x) = e^{-x}
-$$
-
-was used for comparison.
-
-The dataset consists of 100–2000 data points sampled from a defined domain range (e.g., [0, 5] or [-2, 2]). The model is trained to minimize the difference between the predicted solution and the exact solution by updating the network’s parameters using backpropagation.
-
-Some of the more challenging parts of this project will be trying to understand the structure of the neural network and implementing it to our use. For PINNs, the loss function separately considers both the differential equation solution value and its initial condition value relative to the expected. 
-
-Our loss function is thus complicated and could be hard to debug. If all goes well, we could explore the possibilities of modifying the loss function or the other training procedures to compare the results. 
 
 
 
@@ -69,7 +44,7 @@ In the future, we would spend more time to figure out how to generalize our neur
 
    - For this model, our loss function is designed to use a predefined \( f(x) \) function, which limits the model to solving equations that involve only \( x \). As a result, the model is less flexible because it cannot handle ODEs that include both \( x \) and \( y \) or other variable interactions.
 
-<img src="manual_pinn.jpg"  width="60%" />
+<img src="manual_pinn.png"  width="60%" />
 
 2. **Keras PINNs:**
   - The Keras package has existing functions that provides existing and established NN models. We used the sequential model provided by the Keras package. 
