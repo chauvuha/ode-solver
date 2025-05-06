@@ -62,27 +62,59 @@ Prior research has explored various methods for solving ODEs using neural networ
 </details>
 
 <details>
-  <summary>Methods</summary>
+<summary><strong>Methods</strong></summary>
 
-  The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs: a manually-built neural network, a Keras-based PINN using automatic differentiation, and a DeepXDE library that automates the setup and training of the neural network. The hand-built network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function, which combines the residual of the differential equation with the error from the initial or boundary conditions.
+The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs:  
+1. A manually-built neural network,  
+2. A Keras-based PINN using automatic differentiation, and  
+3. A DeepXDE model that automates the entire setup and training process.  
 
-  For the dataset, we constructed training data by sampling from various ODEs. For example, for the first-order ODE, such as  
-  \[
-    \frac{dy}{dx} + y = 0,
-  \]  
-  the exact solution  
-  \[
-    y(x) = e^{-x}
-  \]  
-  was used for comparison. The dataset consists of 100–2000 points sampled from a domain (e.g., \([0,5]\) or \([-2,2]\)). The model is trained to minimize the difference between its predicted solution and the exact solution by backpropagating through both the ODE residual and any initial/boundary condition terms.
+Our **hand-built** network is constructed with Keras’s `Dense` and `Input` layers. We use the Adam optimizer to minimize a composite loss that mixes  
+- the residual error of the differential equation itself, and  
+- the error from any initial or boundary conditions.
 
-  Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
-  \[
-    \mathcal{L} = \mathcal{L}_\text{ODE} + \lambda\,\mathcal{L}_\text{IC/BC}.
-  \]
-  For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
+For our **training data**, we sample points from various ODEs. For example, consider the first-order ODE  
+\[
+\frac{dy}{dx} + y = 0.
+\]  
+We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,2]\), and compare against the exact solution  
+\[
+y(x) = e^{-x}.
+\]  
+Depending on the experiment, each dataset contains between 100 and 2000 points.
+
+During training, we minimize
+\[
+\mathcal{L} \;=\; \underbrace{\frac{1}{N}\sum_{i=1}^N \bigl( f_\theta'(x_i) + f_\theta(x_i)\bigr)^2}_{\displaystyle \mathcal{L}_\text{ODE}} 
+\;+\;
+\lambda\;\underbrace{\frac{1}{M}\sum_{j=1}^M \bigl(f_\theta(x_j^0) - y_0\bigr)^2}_{\displaystyle \mathcal{L}_\text{IC/BC}},
+\]
+where  
+- \(f_\theta\) is our NN’s approximation,  
+- \(\{x_i\}\) are collocation points for the ODE residual,  
+- \(\{x_j^0,y_0\}\) encode any known initial/boundary conditions, and  
+- \(\lambda\) balances the two terms.
+
+Some of the most challenging aspects have been:
+
+- **Understanding and debugging** a loss that mixes two different objectives.  
+- **Implementing** backpropagation through an ODE residual (we hand-rolled finite differences in the manual PINN).  
+- **Stability** issues when choosing discretization step-sizes or learning rates.
+
+For each of the three implementations, we will:
+
+1. Examine its loss curves (\(\mathcal{L}_\text{ODE}\) vs.\ \(\mathcal{L}_\text{IC/BC}\)).  
+2. Track convergence speed and final error against the exact solution.  
+3. Compare accuracy, training time, and ease of implementation.  
+
+This side-by-side analysis will clearly highlight the strengths and weaknesses of:
+
+- A fully hand-coded PINN,  
+- A Keras PINN leveraging `tf.GradientTape`, and  
+- A high-level DeepXDE PINN that abstracts away most boilerplate.
 
 </details>
+
 
 
 
