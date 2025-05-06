@@ -92,56 +92,39 @@ In the future, we would spend more time to figure out how to generalize our neur
 <details>
 <summary><strong>Results</strong></summary>
 
-### 1&nbsp;&nbsp;PINNs built by hand (non‑Keras / non‑DeepXDE)
+1. **PINNs built by hand (Non-Keras or XDE):**
+   - We found that this version is significantly less accurate than others because:
+     + In our loss function, instead of using `tf.GradientTape(u, t)` like the Keras version, we use a finite‐difference stencil dNN ≈ (g(x+ε) − g(x)) / ε, which is slower, less stable, and inherently unreliable. Accuracy critically depends on choosing an optimal \( \epsilon \); if it’s too large, you miss details, and if it’s too small, floating-point noise dominates.
+     + We’re not using `tf.keras.Sequential`, a model that has been developed and optimized for these tasks. Instead, we manually define our weights/biases and `tf.matmul` calls, which might be slower and more error-prone during training.
 
-- This variant is **much less accurate** than the others because  
-  1. In the loss we approximate derivatives with a finite‑difference stencil  
-     \( d_{\text{NN}} \approx \frac{g(x+\varepsilon) - g(x)}{\varepsilon} \),  
-     which is slower and less stable than automatic differentiation.  
-     Choosing \( \varepsilon \) is tricky—too large loses detail, too small amplifies noise.  
-  2. We forego `tf.keras.Sequential` and instead wire up weights/biases and `tf.matmul`
-     by hand, increasing boilerplate and error‑proneness.
+   - For this model, our loss function is designed to use a predefined \( f(x) \) function, which limits the model to solving equations that involve only \( x \). As a result, the model is less flexible because it cannot handle ODEs that include both \( x \) and \( y \) or other variable interactions.
 
-- The loss is hard‑coded for a single‑variable function \( f(x) \).  
-  That means this network cannot handle ODEs that couple \( x \) and \( y \) (or more variables).
+<img src="manual_pinn.png"  width="60%" />
 
-<p align="center">
-  <img src="manual_pinn.png" width="60%" alt="Hand‑built PINN results" />
-</p>
+2. **Keras PINNs:**
+  - The Keras package has existing functions that provides existing and established NN models. We used the sequential model provided by the Keras package. 
+  This model did well with our given example of a Sine wave, the original function and the NN approximation matched each other almost perfectly. 
+  However, problems arise when we try other equations that are not periodic. It is hard to normalize the equation when it goes to infinity, but not normalizing it could risk other problems to the activation function blowing up or going to zero. Thus, this is a problem that needs to be addressed for a better model of training all kinds of differential equation NN, not just the periodic ones. 
 
+  <p align="center">
+    <img src="keras_loss.png" alt="Keras Loss Curve" width="45%" />
+    <img src="keras_train.png" alt="Keras Prediction vs Ground Truth" width="45%" />
+  </p>
 
-### 2&nbsp;&nbsp;Keras PINNs
+3. **DeepXDE PINNs:**
+  <b>DeepXDE output for Sin(2*pi*t):</b>
+  <p align="center">
+    <img src="deepxde_loss.jpg" alt="DeepXDE Loss Curve" width="45%" />
+    <img src="deepxde_train.jpg" alt="Deep XDE Prediction vs Ground Truth" width="45%" />
+  </p>
 
-- We build a dense network with Keras **Sequential** and use `tf.GradientTape`
-  for exact derivatives.  
-- On a sine‑wave test problem, the prediction overlays the ground‑truth almost perfectly.  
-- **Limitation:** when an equation grows unbounded, normalising the target is hard.  
-  Without normalisation, activations may saturate or explode, so additional
-  preprocessing is required for non‑periodic ODEs.
+  - These results look spot on. The loss curves drop smoothly for both train and test, and the solution plot shows that the PINN learned:  
+\( \frac{dy}{dt} = \sin(2\pi t), \quad y(0) = 1 \)  
+almost perfectly. The red dashed line overlaps the true black curve and the training dots.
 
-<p align="center">
-  <img src="keras_loss.png"  width="45%" alt="Keras loss curve"/>
-  <img src="keras_train.png" width="45%" alt="Keras prediction vs truth"/>
-</p>
+  - Additionally, DeepXDE makes this entire process almost trivial. We can define the ODE, domain, and initial condition in a few lines, and DeepXDE uses TensorFlow’s automatic differentiation to build a loss that enforces the differential equation and boundary conditions. It even lets us plug in an exact solution for immediate error checks. A single call to `dde.saveplot()` then gives us both the loss history and the prediction‑vs‑truth comparison without any extra plotting code.
 
-
-### 3&nbsp;&nbsp;DeepXDE PINNs
-
-- **DeepXDE** lets us declare the ODE, domain, and IC/BC in a few lines,
-  then builds the residual loss automatically with TensorFlow AD.
-
-<p align="center">
-  <img src="deepxde_loss.jpg"  width="45%" alt="DeepXDE loss curve"/>
-  <img src="deepxde_train.jpg" width="45%" alt="DeepXDE prediction vs truth"/>
-</p>
-
-- The curves show smooth convergence, and the red dashed prediction lies
-  directly on top of the black true solution for  
-  \( \dfrac{dy}{dt} = \sin(2\pi t),\; y(0)=1 \).
-
-- Compared with a hand‑built or pure‑Keras approach, DeepXDE removes custom
-  gradient code, sampling loops, and plotting—one call to `dde.saveplot()` 
-  outputs both loss history and prediction‑vs‑truth figures.
+  - By contrast, if we tried the same thing in Keras or with a hand‑rolled feedforward network, we’d have to write custom loss functions, call gradient routines ourselves, manually sample time points, and wire up all the training loops. DeepXDE abstracts all that away, so we can focus on modeling rather than boilerplate—and for anyone solving ODEs or PDEs, that makes it the fastest, most reliable choice.
 
 </details>
 
