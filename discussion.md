@@ -140,25 +140,32 @@ In terms of research, specifically in the field of neural networks, our team lea
 </details>
 
 <details>
-<summary>References</summary>
+<summary><strong>References</strong></summary>
 
-[^1]: Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. arXiv preprint arXiv:2302.12260. [View paper](https://arxiv.org/abs/2302.12260)
+<!-- blank line keeps rendering tidy -->
 
-[^2]: Zang, Y., Bao, G., Ye, X., & Zhou, H. (2020). *Weak adversarial networks for high‑dimensional partial differential equations*. *Neurocomputing*, 399, 305–315. [View paper](https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909)
+- **Amini et al. (2023).** *Solving differential equations with Deep Learning: A beginner’s guide.* arXiv 2302.12260.  
+  <https://arxiv.org/abs/2302.12260>
 
-[^3]: MathWorks. (n.d.). *Solve ODEs Using a Neural Network*. [View paper](https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html)
+- **Zang et al. (2020).** *Weak adversarial networks for high‑dimensional partial differential equations.* *Neurocomputing*, 399, 305‑315.  
+  <https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909>
 
-[^4]: Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics‑informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. *Journal of Computational Physics*, 378, 686–707. [View paper](https://www.sciencedirect.com/science/article/pii/S0021999118305527)
+- **MathWorks.** *Solve ODEs Using a Neural Network.*  
+  <https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html>
 
-**Software / Documentation**
+- **Raissi, Perdikaris & Karniadakis (2019).** *Physics‑informed neural networks.* *J. Comput. Phys.*, 378, 686‑707.  
+  <https://www.sciencedirect.com/science/article/pii/S0021999118305527>
 
-- DeepXDE documentation: <https://deepxde.readthedocs.io/en/latest/>  
-- Keras Model API: <https://keras.io/api/models/model/>
+---
 
-**Colab Notebooks**
+### Software / Documentation
+- DeepXDE docs <https://deepxde.readthedocs.io/en/latest/>  
+- Keras Model API <https://keras.io/api/models/model/>
 
-1. Hand‑built PINN example: <https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing>  
-2. Keras & DeepXDE comparison: <https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing>
+### Colab Notebooks
+1. Hand‑built PINN example <https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing>  
+2. Keras & DeepXDE comparison <https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing>
 
 </details>
+
 
