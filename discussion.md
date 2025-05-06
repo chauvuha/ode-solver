@@ -139,6 +139,8 @@ This project opens up opportunities for potential future work. One key direction
 In terms of research, specifically in the field of neural networks, our team learned a lot about PINNs, not only on how to implement these models, but also to compare and contrast their performances. We also trained our skills in finding literature, trying out sample codes, and refactoring these open-source model for our project’s goals. In addition to that, we also learned how to work in a group, plan tasks for everyone, and reprioritize as needed.
 </details>
 
+
+
 ## References
 
 [^1]: Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. arXiv preprint arXiv:2302.12260. [View paper](https://arxiv.org/abs/2302.12260)
