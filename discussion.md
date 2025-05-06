@@ -9,16 +9,20 @@
     font-weight: 600;
     color: #2c3e50;
     transition: color 0.2s;
+    font-size: 1.25rem;        /* ↑ increase size here */
+    margin-bottom: 0.5rem;     /* ↑ add space below */
   }
   details summary:hover {
     color: #1abc9c;
   }
-  /* Enlarge the triangle marker */
   details summary::-webkit-details-marker {
-    font-size: 1.2em;
+    font-size: 1.4em;          /* ↑ enlarge the arrow */
   }
   details summary::marker {
-    font-size: 1.2em;
+    font-size: 1.4em;          /* ↑ enlarge the arrow for Firefox */
+  }
+  details {
+    margin-bottom: 1.5rem;     /* ↑ space between collapsed sections */
   }
 </style>
 
