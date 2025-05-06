@@ -64,6 +64,8 @@ Prior research has explored various methods for solving ODEs using neural networ
 <details>
 <summary><strong>Methods</strong></summary>
 
+<!-- you must have a blank line here -->
+
 The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs:
 
 1. A manually-built neural network  
@@ -77,15 +79,19 @@ Our **hand-built** network is constructed with Keras’s `Dense` and `Input` lay
 
 For our **training data**, we sample points from various ODEs. For example, consider the first‐order ODE:
 
-\[
-\frac{dy}{dx} + y = 0.
+\[  
+\frac{dy}{dx} + y = 0  
 \]
+
+<!-- blank line is crucial -->
 
 We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,2]\), and compare against the exact solution:
 
-\[
-y(x) = e^{-x}.
+\[  
+y(x) = e^{-x}  
 \]
+
+<!-- another blank line -->
 
 Depending on the experiment, each dataset contains between 100 and 2000 points.
 
@@ -108,6 +114,7 @@ This side-by-side analysis will highlight the strengths and weaknesses of:
 - A DeepXDE PINN that abstracts away most boilerplate
 
 </details>
+
 
 
 
