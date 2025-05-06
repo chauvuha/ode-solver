@@ -62,27 +62,38 @@ Prior research has explored various methods for solving ODEs using neural networ
 </details>
 
 <details>
-  <summary>Methods</summary>
+<summary>Methods</summary>
 
-  The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs: a manually-built neural network, a Keras-based PINN using automatic differentiation, and a DeepXDE library that automates the setup and training of the neural network. The hand-built network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function, which combines the residual of the differential equation with the error from the initial or boundary conditions.
+The primary software we use to implement the PINN is **TensorFlow** and **Keras**.  
+We will train **three PINNs**: a manually‑built neural network, a Keras‑based
+PINN using automatic differentiation, and a DeepXDE model that automates the
+setup and training of the neural network.  
+The hand‑built network is constructed with Keras `Dense` and `Input` layers,
+with the **Adam** optimizer minimising a loss that mixes the residual error
+from the differential equation with the error from initial or boundary
+conditions.
 
-  For the dataset, we constructed training data by sampling from various ODEs. For example, for the first-order ODE, such as  
-  \[
-    \frac{dy}{dx} + y = 0,
-  \]  
-  the exact solution  
-  \[
-    y(x) = e^{-x}
-  \]  
-  was used for comparison. The dataset consists of 100–2000 points sampled from a domain (e.g., \([0,5]\) or \([-2,2]\)). The model is trained to minimize the difference between its predicted solution and the exact solution by backpropagating through both the ODE residual and any initial/boundary condition terms.
+For the dataset, we sample training points from various ODEs.  
+For example, for a first‑order ODE such as \(dy/dx + y = 0\), we compare
+against the exact solution \(y(x)=e^{-x}\).  
+Each dataset contains 100–2000 points drawn from a domain like \([0,5]\) or
+\([-2,2]\).
 
-Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
-  \[
-    \mathcal{L} = \mathcal{L}_\text{ODE} + \lambda\,\mathcal{L}_\text{IC/BC}.
-  \]
-For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
+During training, the model minimises the difference between the network’s
+prediction and the exact solution by updating parameters through
+back‑propagation.
+
+Some key challenges are understanding the network structure, implementing it
+for our use case, and tuning a loss that separately weighs the differential
+equation residual and the initial‑condition term.  
+Because this composite loss can be difficult to debug, we will examine the
+loss curve and training process for each model and compare accuracy,
+convergence speed, and implementation effort.  
+This side‑by‑side evaluation will highlight the strengths and weaknesses of
+each approach.
 
 </details>
+
 
 
 
