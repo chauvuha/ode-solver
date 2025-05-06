@@ -49,7 +49,40 @@ ODEs (ordinary differential equations) are an important way of modeling the worl
 </details>
 
 
+<details>
+<summary>Ethics Discussion</summary>
 
+Our project seeks to go beyond academic research by making our findings accessible through an interactive web interface, ensuring that anyone can use the program upon publishing our results. We understand there is the risk of students misusing this program in ways that violate school policies, such as cheating and plagiarism, but the applicability of this program in helping students learn and understand differential equations outweighs the chances of misuse, as it provides a learning opportunity for people who may not have access to advanced calculators.
+</details>
+
+<details>
+<summary>Related Work</summary>
+
+Prior research has explored various methods for solving ODEs using neural networks. Some studies introduced PINNs to solve first- and second-order ODEs, highlighting their usefulness in physics simulations and their ability to incorporate physical laws directly into the model’s structure[^1]. Other studies expanded on this method by modifying the loss function to include the differential equation itself, allowing the model to learn to satisfy the equation rather than simply fit example data points[^2]. MathWorks presented a different strategy, using neural networks to produce closed-form approximations of ODE solutions, supported by a training process that involves generating data, defining the network, and customizing the loss function[^3]. Additionally, researchers have applied similar techniques to Partial Differential Equations (PDEs), training models on randomly sampled space and time points to approximate solutions where no analytical answers exist[^4]. Together, these works show the versatility and potential of neural networks in solving both ODEs and PDEs, laying the groundwork for our own project.
+</details>
+
+<details>
+  <summary>Methods</summary>
+
+  The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs: a manually-built neural network, a Keras-based PINN using automatic differentiation, and a DeepXDE library that automates the setup and training of the neural network. The hand-built network is built using the Dense and Input layers from Keras, with the Adam optimizer used to minimize the loss function, which combines the residual of the differential equation with the error from the initial or boundary conditions.
+
+  For the dataset, we constructed training data by sampling from various ODEs. For example, for the first-order ODE, such as  
+  \[
+    \frac{dy}{dx} + y = 0,
+  \]  
+  the exact solution  
+  \[
+    y(x) = e^{-x}
+  \]  
+  was used for comparison. The dataset consists of 100–2000 points sampled from a domain (e.g., \([0,5]\) or \([-2,2]\)). The model is trained to minimize the difference between its predicted solution and the exact solution by backpropagating through both the ODE residual and any initial/boundary condition terms.
+
+  Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
+  \[
+    \mathcal{L} = \mathcal{L}_\text{ODE} + \lambda\,\mathcal{L}_\text{IC/BC}.
+  \]
+  For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
+
+</details>
 
 
 
