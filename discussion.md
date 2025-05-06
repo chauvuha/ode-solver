@@ -76,11 +76,11 @@ Prior research has explored various methods for solving ODEs using neural networ
   \]  
   was used for comparison. The dataset consists of 100–2000 points sampled from a domain (e.g., \([0,5]\) or \([-2,2]\)). The model is trained to minimize the difference between its predicted solution and the exact solution by backpropagating through both the ODE residual and any initial/boundary condition terms.
 
-  Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
+Some of the more challenging parts are understanding the NN’s structure and debugging the combined loss:
   \[
     \mathcal{L} = \mathcal{L}_\text{ODE} + \lambda\,\mathcal{L}_\text{IC/BC}.
   \]
-  For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
+For each implementation, we’ll examine the loss curves and training procedures, then compare final accuracy and convergence speed. This highlights the strengths and weaknesses of manual PINNs versus Keras PINNs versus DeepXDE PINNs.
 
 </details>
 
