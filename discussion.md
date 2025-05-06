@@ -77,7 +77,7 @@ Our **hand-built** network is constructed with Keras’s `Dense` and `Input` lay
 - the residual error of the differential equation itself, and  
 - the error from any initial or boundary conditions.
 
-For our **training data**, we sample points from various ODEs. For example, consider the first‐order ODE:
+For our **training data**, we sample points from various ODEs.  For example, consider the first-order ODE:
 
 \[
 \frac{dy}{dx} + y = 0
@@ -89,9 +89,9 @@ We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,
 y(x) = e^{-x}
 \]
 
-Depending on the experiment, each dataset contains between 100 and 2000 points.
+Depending on the experiment, each dataset contains between 100 and 2000 points.  During training, we back-propagate through both the ODE residual and any initial-condition terms to update the network’s parameters.
 
-During training, we backpropagate through both the ODE residual and any initial-condition terms to update the network’s parameters. Some of the most challenging aspects have been:
+Some of the most challenging aspects have been:
 
 - **Understanding and debugging** a loss that mixes two objectives.  
 - **Implementing** differentiation by hand for the manual PINN, rather than relying on `tf.GradientTape`.  
@@ -110,6 +110,7 @@ This side-by-side analysis will highlight the strengths and weaknesses of:
 - A DeepXDE PINN that abstracts away most boilerplate
 
 </details>
+
 
 
 
