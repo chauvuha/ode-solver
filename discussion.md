@@ -139,33 +139,20 @@ This project opens up opportunities for potential future work. One key direction
 In terms of research, specifically in the field of neural networks, our team learned a lot about PINNs, not only on how to implement these models, but also to compare and contrast their performances. We also trained our skills in finding literature, trying out sample codes, and refactoring these open-source model for our project’s goals. In addition to that, we also learned how to work in a group, plan tasks for everyone, and reprioritize as needed.
 </details>
 
-<details>
-<summary><strong>References</strong></summary>
+## References
 
-<!-- blank line keeps rendering tidy -->
+[^1]: Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. arXiv preprint arXiv:2302.12260. [View paper](https://arxiv.org/abs/2302.12260)
 
-- **Amini et al. (2023).** *Solving differential equations with Deep Learning: A beginner’s guide.* arXiv 2302.12260.  
-  <a href="https://arxiv.org/abs/2302.12260"> </a>
+[^2]: Zang, Y., Bao, G., Ye, X., & Zhou, H. (2020). *Weak adversarial networks for high-dimensional partial differential equations*. Neurocomputing, 399, 305–315. [View paper](https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909)
 
-- **Zang et al. (2020).** *Weak adversarial networks for high‑dimensional partial differential equations.* *Neurocomputing*, 399, 305‑315.  
-  <https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909>
+[^3]: MathWorks. (n.d.). *Solve ODEs Using a Neural Network*. [View paper](https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html)
 
-- **MathWorks.** *Solve ODEs Using a Neural Network.*  
-  <https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html>
+[^4]: Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. *Journal of Computational Physics*, 378, 686–707. [View paper](https://www.sciencedirect.com/science/article/pii/S0021999118305527)
 
-- **Raissi, Perdikaris & Karniadakis (2019).** *Physics‑informed neural networks.* *J. Comput. Phys.*, 378, 686‑707.  
-  <https://www.sciencedirect.com/science/article/pii/S0021999118305527>
+[^5]: *DeepXDE documentation.* <https://deepxde.readthedocs.io/en/latest/>
 
----
+[^6]: *Keras Model API.* <https://keras.io/api/models/model/>
 
-### Software / Documentation
-- DeepXDE docs <https://deepxde.readthedocs.io/en/latest/>  
-- Keras Model API <https://keras.io/api/models/model/>
+[^7]: *Hand‑built PINN Colab example.* <https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing>
 
-### Colab Notebooks
-1. Hand‑built PINN example <https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing>  
-2. Keras & DeepXDE comparison <https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing>
-
-</details>
-
-
+[^8]: *Keras & DeepXDE comparison Colab.* <https://colab.research.google.com/drive/1L1EmfOFFnoXfCF8YwNxkCflEV0gAScqx?usp=sharing>
