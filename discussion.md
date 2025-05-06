@@ -64,32 +64,45 @@ Prior research has explored various methods for solving ODEs using neural networ
 <details>
 <summary><strong>Methods</strong></summary>
 
-The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs:  
+<!-- blank line after summary is important -->
+
+The primary software we use to implement the PINN is TensorFlow and Keras. We will train three PINNs:
+
 1. A manually-built neural network,  
 2. A Keras-based PINN using automatic differentiation, and  
-3. A DeepXDE model that automates the entire setup and training process.  
+3. A DeepXDE model that automates the entire setup and training process.
 
-Our **hand-built** network is constructed with Keras’s `Dense` and `Input` layers. We use the Adam optimizer to minimize a composite loss that mixes  
+Our **hand-built** network is constructed with Keras’s `Dense` and `Input` layers. We use the Adam optimizer to minimize a composite loss that mixes
+
 - the residual error of the differential equation itself, and  
 - the error from any initial or boundary conditions.
 
-For our **training data**, we sample points from various ODEs. For example, consider the first-order ODE  
+For our **training data**, we sample points from various ODEs. For example, consider the first‐order ODE
+
 \[
 \frac{dy}{dx} + y = 0.
-\]  
-We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,2]\), and compare against the exact solution  
+\]
+
+We generate noisy samples \((x_i, y_i)\) on a domain such as \([0,5]\) or \([-2,2]\), and compare against the exact solution
+
 \[
 y(x) = e^{-x}.
-\]  
+\]
+
 Depending on the experiment, each dataset contains between 100 and 2000 points.
 
 During training, we minimize
+
 \[
-\mathcal{L} \;=\; \underbrace{\frac{1}{N}\sum_{i=1}^N \bigl( f_\theta'(x_i) + f_\theta(x_i)\bigr)^2}_{\displaystyle \mathcal{L}_\text{ODE}} 
+\mathcal{L} \;=\; 
+\underbrace{\frac{1}{N}\sum_{i=1}^N \bigl(f_\theta'(x_i) + f_\theta(x_i)\bigr)^2}_{\mathcal{L}_\text{ODE}}
 \;+\;
-\lambda\;\underbrace{\frac{1}{M}\sum_{j=1}^M \bigl(f_\theta(x_j^0) - y_0\bigr)^2}_{\displaystyle \mathcal{L}_\text{IC/BC}},
+\lambda\,
+\underbrace{\frac{1}{M}\sum_{j=1}^M \bigl(f_\theta(x_j^0) - y_0\bigr)^2}_{\mathcal{L}_\text{IC/BC}},
 \]
-where  
+
+where
+
 - \(f_\theta\) is our NN’s approximation,  
 - \(\{x_i\}\) are collocation points for the ODE residual,  
 - \(\{x_j^0,y_0\}\) encode any known initial/boundary conditions, and  
@@ -105,7 +118,7 @@ For each of the three implementations, we will:
 
 1. Examine its loss curves (\(\mathcal{L}_\text{ODE}\) vs.\ \(\mathcal{L}_\text{IC/BC}\)).  
 2. Track convergence speed and final error against the exact solution.  
-3. Compare accuracy, training time, and ease of implementation.  
+3. Compare accuracy, training time, and ease of implementation.
 
 This side-by-side analysis will clearly highlight the strengths and weaknesses of:
 
@@ -114,6 +127,7 @@ This side-by-side analysis will clearly highlight the strengths and weaknesses o
 - A high-level DeepXDE PINN that abstracts away most boilerplate.
 
 </details>
+
 
 
 
