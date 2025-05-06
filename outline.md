@@ -55,9 +55,18 @@ Our project seeks to go beyond academic research by making our findings accessib
 <details>
 <summary>Related Work</summary>
 
-Prior research has explored various methods for solving ODEs using neural networks. Some studies introduced PINNs to solve first- and second-order ODEs, highlighting their usefulness in physics simulations and their ability to incorporate physical laws directly into the model’s structure ([Amini et al., 2023](https://arxiv.org/abs/2302.12260)). Other studies expanded on this method by modifying the loss function to include the differential equation itself ([Zang et al., 2020](https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909)). MathWorks presented a different strategy, using neural networks to produce closed-form approximations of ODE solutions ([MathWorks guide](https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html)). Additionally, researchers have applied similar techniques to PDEs, training models on randomly sampled space and time points to approximate solutions where no analytical answers exist ([Raissi et al., 2019](https://www.sciencedirect.com/science/article/pii/S0021999118305527)). These works show the versatility of neural networks in solving differential equations, forming the foundation for our own exploration.
+Prior research has explored various methods for solving ODEs using neural networks. Some studies introduced PINNs to solve first- and second-order ODEs, highlighting their usefulness in physics simulations and their ability to incorporate physical laws directly into the model’s structure [1]. Other studies expanded on this method by modifying the loss function to include the differential equation itself, allowing the model to learn to satisfy the equation rather than simply fit example data points [2]. MathWorks presented a different strategy, using neural networks to produce closed-form approximations of ODE solutions, supported by a training process that involves generating data, defining the network, and customizing the loss function [3]. Additionally, researchers have applied similar techniques to Partial Differential Equations (PDEs), training models on randomly sampled space and time points to approximate solutions where no analytical answers exist [4]. Together, these works show the versatility and potential of neural networks in solving both ODEs and PDEs, laying the groundwork for our own project.
+
+<br>
+
+**References**  
+[1] Amini, S., Hashemi, A., Azizi, A., & Ebrahimi, H. (2023). *Solving differential equations with Deep Learning: A beginner’s guide*. [arXiv:2302.12260](https://arxiv.org/abs/2302.12260)  
+[2] Zang, Y., Bao, G., Ye, X., & Zhou, H. (2020). *Weak adversarial networks for high-dimensional partial differential equations*. [Neurocomputing](https://www.sciencedirect.com/science/article/abs/pii/S0925231220301909)  
+[3] MathWorks. *Solve ODEs Using a Neural Network*. [Link](https://www.mathworks.com/help/deeplearning/ug/solve-odes-using-a-neural-network.html)  
+[4] Raissi, M., Perdikaris, P., & Karniadakis, G. E. (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. [Journal of Computational Physics](https://www.sciencedirect.com/science/article/pii/S0021999118305527)
 
 </details>
+
 
 <details>
 <summary>Methods</summary>
