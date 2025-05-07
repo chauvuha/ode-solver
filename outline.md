@@ -80,13 +80,12 @@ The exact solution is:
 <details>
 <summary><strong>Discussion</strong></summary>
 
-We are creating our own data set using methods from [torchdiffeq](https://github.com/rtqichen/torchdiffeq), and trained our PINN with these specifically generated data sets.  
-We implemented this PINN network to train three different types of differential equations, based on [these tests](https://github.com/rtqichen/torchdiffeq).  
-We will create graphs to visualize how well our neural network’s predictions align with the ground truth during training.  
-After training, we’ll generate new data and test each model's accuracy.  
-We expect our hand-built model to perform worse due to limited data and less optimization, but it will give insight into the tradeoffs.  
-We also compare the accuracy of all three NNs and analyze why one may perform better than the others.  
-In the future, we aim to generalize these networks to solve more diverse equations.
+We are creating our own data set, with methods provided by <a href="https://github.com/rtqichen/torchdiffeq/blob/master/README.md"><i>torchdiffeq</i></a>, and trained our PINN with these specifically generated data set.  
+We are implementing this PINN network to train three different data sets, corresponding to three different types of differential equations, based on <a href="https://github.com/rtqichen/torchdiffeq">these tests</a>.  
+We will also create a graph visualization to show how well our neural network’s predictions align with the ground truth solutions of the differential equation during the training process.  
+After training these Neural Networks, we will again generate another set of data by similar methods, and test each of these three networks on their accuracy.  
+We will compare our base type differential equation to the literature results, expecting to perform less accurately due to less data. We will also compare the accuracy between each type of NN, and decipher the potential reasons that one does better or worse.  
+In the future, we would spend more time to figure out how to generalize our neural network to more types of equations.
 
 </details>
 
