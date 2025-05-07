@@ -124,6 +124,178 @@ almost perfectly. The red dashed line overlaps the true black curve and the trai
   - Additionally, DeepXDE makes this entire process almost trivial. We can define the ODE, domain, and initial condition in a few lines, and DeepXDE uses TensorFlow’s automatic differentiation to build a loss that enforces the differential equation and boundary conditions. It even lets us plug in an exact solution for immediate error checks. A single call to `dde.saveplot()` then gives us both the loss history and the prediction‑vs‑truth comparison without any extra plotting code.
 
   - By contrast, if we tried the same thing in Keras or with a hand‑rolled feedforward network, we’d have to write custom loss functions, call gradient routines ourselves, manually sample time points, and wire up all the training loops. DeepXDE abstracts all that away, so we can focus on modeling rather than boilerplate—and for anyone solving ODEs or PDEs, that makes it the fastest, most reliable choice.
+  
+<details>
+<summary><strong>DeepXDE Code</strong></summary>
+
+```python
+from deepxde.backend.set_default_backend import set_default_backend
+set_default_backend("tensorflow")
+import tensorflow as tf
+import deepxde as dde
+import numpy as np
+import matplotlib.pyplot as plt
+import math as m
+pi = tf.constant(m.pi)
+
+def ode_system(t, u):
+   du_t = dde.grad.jacobian(u, t)
+   return du_t - tf.math.sin(2*pi*t)
+
+def boundary(t, on_initial):
+   return on_initial and np.isclose(t[0], 0)
+
+geom = dde.geometry.TimeDomain(0, 2)
+ic = dde.IC(geom, lambda t: 1, boundary)
+
+def true_solution(t):
+   return -np.cos(2 * np.pi * t) / (2 * np.pi) + (1 + 1 / (2 * np.pi))
+
+data = dde.data.PDE(geom,
+                   ode_system,
+                   ic,
+                   num_domain=30,
+                   num_boundary=2,
+                   solution=true_solution,
+                   num_test=100)
+
+layer_size = [1, 32, 32, 1]
+activation = "tanh"
+initializer = "Glorot uniform"
+
+NN = dde.maps.FNN(layer_size, activation, initializer)
+model = dde.Model(data, NN)
+model.compile("adam", lr=0.001)
+losshistory, train_state = model.train(epochs=3000)
+dde.saveplot(losshistory, train_state, issave=False, isplot=True)
+</details>
+<details> <summary><strong>Keras Code</strong></summary>
+python
+Copy
+Edit
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+tf.compat.v1.enable_eager_execution()
+import warnings
+warnings.filterwarnings("ignore")
+
+NN = tf.keras.models.Sequential([
+   tf.keras.layers.Input((1,)),
+   tf.keras.layers.Dense(32, activation='tanh'),
+   tf.keras.layers.Dense(32, activation='tanh'),
+   tf.keras.layers.Dense(1)
+])
+
+NN.summary()
+optm = tf.keras.optimizers.Adam(learning_rate=0.001)
+
+def ode_system(t, net):
+   t = t.reshape(-1,1)
+   t = tf.constant(t, dtype=tf.float32)
+   t_0 = tf.zeros((1,1))
+   one = tf.ones((1,1))
+
+   with tf.GradientTape() as tape:
+       tape.watch(t)
+       u = net(t)
+       u_t = tape.gradient(u, t)
+
+   ode_loss = u_t - tf.math.sin(2*np.pi*t)
+   IC_loss = net(t_0) - one
+   square_loss = tf.square(ode_loss) + tf.square(IC_loss)
+   total_loss = tf.reduce_mean(square_loss)
+   return total_loss
+
+train_loss_record = []
+
+for itr in range(3000):
+   train_t = (np.random.rand(20)*2).reshape(-1, 1)
+   with tf.GradientTape() as tape:
+       train_loss = ode_system(train_t, NN)
+       train_loss_record.append(train_loss)
+       grad_w = tape.gradient(train_loss, NN.trainable_variables)
+       optm.apply_gradients(zip(grad_w, NN.trainable_variables))
+   if itr % 1000 == 0:
+       print('Epoch: {} Loss: {:.4f}'.format(itr, train_loss.numpy()))
+
+plt.figure(figsize=(6, 4))
+plt.plot(train_loss_record)
+plt.show()
+
+test_t = np.linspace(0, 2, 100)
+test_t = tf.constant(test_t, dtype=tf.float32)
+
+pred_u = NN(test_t).numpy()
+true_u = -np.cos(2*np.pi*test_t)/(2*np.pi) + (1+1/(2*np.pi))
+
+plt.figure(figsize=(6, 4))
+plt.plot(test_t, true_u, 'k', label='True', alpha=0.3)
+plt.plot(test_t, pred_u, '--r', label='Prediction', linewidth=3)
+plt.legend()
+plt.xlabel('t')
+plt.ylabel('u')
+plt.show()
+</details>
+<details> <summary><strong>PINNs Built by Hand (Non-Keras or XDE)</strong></summary>
+python
+Copy
+Edit
+# Initial condition
+f0 = 1
+inf_s = np.sqrt(np.finfo(np.float32).eps)
+
+# Parameters
+learning_rate = 0.01
+training_steps = 500
+batch_size = 100
+display_step = training_steps / 10
+
+# Network parameters
+n_input, n_hidden_1, n_hidden_2, n_output = 1, 32, 32, 1
+
+weights = {
+   'h1': tf.Variable(tf.random.normal([n_input, n_hidden_1])),
+   'h2': tf.Variable(tf.random.normal([n_hidden_1, n_hidden_2])),
+   'out': tf.Variable(tf.random.normal([n_hidden_2, n_output]))
+}
+biases = {
+   'b1': tf.Variable(tf.random.normal([n_hidden_1])),
+   'b2': tf.Variable(tf.random.normal([n_hidden_2])),
+   'out': tf.Variable(tf.random.normal([n_output]))
+}
+
+optimizer = tf.optimizers.SGD(learning_rate)
+
+def multilayer_perceptron(x):
+   x = np.array([[[x]]], dtype='float32')
+   layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, weights['h1']), biases['b1']))
+   layer_2 = tf.nn.sigmoid(tf.add(tf.matmul(layer_1, weights['h2']), biases['b2']))
+   output = tf.matmul(layer_2, weights['out']) + biases['out']
+   return output
+
+def g(x):
+   return x * multilayer_perceptron(x) + f0
+
+pi = tf.constant(np.pi)
+def f(x):
+   return tf.math.sin(2*pi*x)
+
+def custom_loss():
+   xs = np.random.rand(20)
+   errors = []
+   for x in xs:
+       dNN = (g(x + inf_s) - g(x)) / inf_s
+       errors.append((dNN - f(x))**2)
+   return tf.reduce_sum(errors)
+
+def train_step():
+   with tf.GradientTape() as tape:
+       loss = custom_loss()
+   trainable_variables = list(weights.values()) + list(biases.values())
+   gradients = tape.gradient(loss, trainable_variables)
+   optimizer.apply_gradients(zip(gradients, trainable_variables))
+</details> ```
 
 <details>
 <summary>Conclusion/Future Work</summary>
