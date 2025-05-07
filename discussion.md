@@ -374,22 +374,20 @@ for _ in range(training_steps):
 </details>
 
 <details>
-<summary>Conclusion/Future Work</summary>
-
-This project opens up opportunities for future work. We aim to create better models that handle higher-order and complex systems.  
-One idea is to combine the strengths of different models into a meta-model that selects the best PINN for a given equation.  
-We also plan to build a web-based demo to showcase the models and compare performance.
-
+<summary><strong>Conclusion/Future Work</strong></summary>
+<p>
+  This project opens up opportunities for potential future work. One key direction we are focusing on is creating better models that can approximate higher-order equations and more complex systems. Another potential feature, given more time, would be to experiment with developing a combined model trained on the results from these individual models, capable of determining which model best fits the function type we are approximating. Additionally, we would like to create a web-based version of our models to showcase our results and more effectively communicate the differences between them.
+</p>
 </details>
+
 
 <details>
-<summary>Reflection</summary>
-
-Our team learned not only how to implement PINNs but also how to research, collaborate, and plan development work.  
-We improved our literature review skills, modified open-source models, and compared performance across different approaches.  
-This project also helped us learn to work as a group and prioritize tasks.
-
+<summary><strong>Reflection</strong></summary>
+<p>
+  In terms of research, specifically in the field of neural networks, our team learned a lot about PINNs—not only how to implement these models, but also how to compare and contrast their performances. We also trained our skills in finding literature, trying out sample codes, and refactoring these open-source models to fit our project’s goals. In addition to that, we learned how to work effectively as a group, plan tasks for everyone, and reprioritize as needed.
+</p>
 </details>
+
 
 ---
 
