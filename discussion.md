@@ -168,9 +168,17 @@ In the future, we would spend more time to figure out how to generalize our neur
   \[
     \frac{dy}{dt} = \sin(2\pi t), \quad y(0) = 1
   \]
-  The red dashed line (prediction) overlaps the true curve nearly everywhere. DeepXDE also streamlines the entire PINN process,
-  letting you define the problem, initial conditions, and even the reference solution in just a few lines.
+  The red dashed line (prediction) overlaps the true curve almost exactly, with a smooth drop in both train and test loss curves.
 </p>
+
+<p>
+  What sets DeepXDE apart is how effortless it makes the entire process. With just a few lines, you can define the ODE, domain, and initial condition, and DeepXDE builds the loss using TensorFlow’s automatic differentiation. You can even provide an exact solution for instant error checking. One call to <code>dde.saveplot()</code> handles both training history and output visualization—no custom loss code or manual gradient handling needed.
+</p>
+
+<p>
+  Compared to hand-built or Keras-based PINNs, DeepXDE abstracts away boilerplate work, allowing you to focus entirely on modeling. For solving ODEs or PDEs quickly and reliably, it’s the most streamlined and scalable option.
+</p>
+
 
 <div class="results-img-row">
   <a href="deepxde_loss.jpg" target="_blank">
