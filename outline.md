@@ -128,6 +128,8 @@ almost perfectly. The red dashed line overlaps the true black curve and the trai
 <details>
 <summary><strong>DeepXDE Code</strong></summary>
 
+<br>
+
 ```python
 from deepxde.backend.set_default_backend import set_default_backend
 set_default_backend("tensorflow")
@@ -169,7 +171,7 @@ model.compile("adam", lr=0.001)
 losshistory, train_state = model.train(epochs=3000)
 dde.saveplot(losshistory, train_state, issave=False, isplot=True)
 </details>
-<details> <summary><strong>Keras Code</strong></summary>
+<details> <summary><strong>Keras Code</strong></summary> <br>
 python
 Copy
 Edit
@@ -237,7 +239,7 @@ plt.xlabel('t')
 plt.ylabel('u')
 plt.show()
 </details>
-<details> <summary><strong>PINNs Built by Hand (Non-Keras or XDE)</strong></summary>
+<details> <summary><strong>PINNs Built by Hand (Non-Keras or XDE)</strong></summary> <br>
 python
 Copy
 Edit
