@@ -138,9 +138,15 @@ In the future, we would spend more time to figure out how to generalize our neur
 
 <h4>2. <strong>Keras PINNs</strong></h4>
 <p>
-  The Keras model performed well on the sinusoidal example. Its prediction closely matches the true function.
-  However, non-periodic functions caused issues—particularly due to challenges in normalizing unbounded outputs,
-  which risks activation functions exploding or vanishing.
+  The Keras model performed well on the sinusoidal example. Its prediction closely matches the true function. The Keras API provides existing and established neural network models, designed for user-friendly model building, making it a suitable framework for implementing PINNs. We used the <code>Sequential</code> model provided by the Keras package to construct a dense neural network for solving our differential equation.
+</p>
+
+<p>
+  This model performed exceptionally well with our sine wave example; the original function and the neural network approximation aligned almost perfectly. However, challenges emerged when attempting to solve equations that are not periodic. One notable issue is handling unbounded outputs: it's difficult to normalize such equations, and without proper normalization, the activation functions can either explode or vanish. This can lead to instability or inaccurate training results.
+</p>
+
+<p>
+  Although the Keras API offers a quick and efficient way to build and train differential equation solvers, careful tuning of the initial conditions and network configuration is essential. The initialization process must be thoughtfully adjusted for each type of equation to ensure high accuracy. This model proves especially useful in scenarios where you're solving a single, well-defined differential equation (such as the Navier-Stokes equation in fluid dynamics), as the initialization only needs to be tuned once to yield reliable, high-precision results.
 </p>
 
 <div class="results-img-row">
