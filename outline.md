@@ -89,40 +89,91 @@ In the future, we would spend more time to figure out how to generalize our neur
 
 </details>
 
-### Results
-1. **PINNs built by hand (Non-Keras or XDE):**
-   - We found that this version is significantly less accurate than others because:
-     + In our loss function, instead of using `tf.GradientTape(u, t)` like the Keras version, we use a finite‐difference stencil dNN ≈ (g(x+ε) − g(x)) / ε, which is slower, less stable, and inherently unreliable. Accuracy critically depends on choosing an optimal \( \epsilon \); if it’s too large, you miss details, and if it’s too small, floating-point noise dominates.
-     + We’re not using `tf.keras.Sequential`, a model that has been developed and optimized for these tasks. Instead, we manually define our weights/biases and `tf.matmul` calls, which might be slower and more error-prone during training.
+<style>
+.results-img-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.results-img-row img {
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 45%;
+  max-width: 500px;
+}
+.results-img-row img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.results-paragraph {
+  padding: 0.5rem 1.5rem;
+  line-height: 1.6;
+}
+</style>
 
-   - For this model, our loss function is designed to use a predefined \( f(x) \) function, which limits the model to solving equations that involve only \( x \). As a result, the model is less flexible because it cannot handle ODEs that include both \( x \) and \( y \) or other variable interactions.
+<details open>
+<summary><h3>🔍 Results</h3></summary>
+<div class="results-paragraph">
 
-<img src="manual_pinn.png"  width="60%" />
+<h4>1. <strong>PINNs built by hand (Non-Keras or XDE)</strong></h4>
+<ul>
+  <li>We found that this version is significantly less accurate than others because:</li>
+  <ul>
+    <li>Instead of using <code>tf.GradientTape()</code>, it uses a finite-difference stencil:
+      <code>dNN ≈ (g(x+ε) − g(x)) / ε</code>. This is slower, less stable, and affected by floating-point noise.</li>
+    <li>We're not using <code>tf.keras.Sequential</code> but hand-coded weights/biases with <code>tf.matmul</code>, which is more error-prone.</li>
+  </ul>
+  <li>The model can only solve ODEs in terms of \( x \), making it inflexible for ODEs involving both \( x \) and \( y \).</li>
+</ul>
 
-2. **Keras PINNs:**
-  - The Keras package has existing functions that provides existing and established NN models. We used the sequential model provided by the Keras package. 
-  This model did well with our given example of a Sine wave, the original function and the NN approximation matched each other almost perfectly. 
-  However, problems arise when we try other equations that are not periodic. It is hard to normalize the equation when it goes to infinity, but not normalizing it could risk other problems to the activation function blowing up or going to zero. Thus, this is a problem that needs to be addressed for a better model of training all kinds of differential equation NN, not just the periodic ones. 
+<div class="results-img-row">
+  <a href="manual_pinn.png" target="_blank">
+    <img src="manual_pinn.png" alt="Manual PINN Results">
+  </a>
+</div>
 
-  <p align="center">
-    <img src="keras_loss.png" alt="Keras Loss Curve" width="45%" />
-    <img src="keras_train.png" alt="Keras Prediction vs Ground Truth" width="45%" />
-  </p>
+<h4>2. <strong>Keras PINNs</strong></h4>
+<p>
+  The Keras model performed well on the sinusoidal example. Its prediction closely matches the true function.
+  However, non-periodic functions caused issues—particularly due to challenges in normalizing unbounded outputs,
+  which risks activation functions exploding or vanishing.
+</p>
 
-3. **DeepXDE PINNs:**
-  <b>DeepXDE output for Sin(2*pi*t):</b>
-  <p align="center">
-    <img src="deepxde_loss.jpg" alt="DeepXDE Loss Curve" width="45%" />
-    <img src="deepxde_train.jpg" alt="Deep XDE Prediction vs Ground Truth" width="45%" />
-  </p>
+<div class="results-img-row">
+  <a href="keras_loss.png" target="_blank">
+    <img src="keras_loss.png" alt="Keras Loss Curve">
+  </a>
+  <a href="keras_train.png" target="_blank">
+    <img src="keras_train.png" alt="Keras Prediction vs Ground Truth">
+  </a>
+</div>
 
-  - These results look spot on. The loss curves drop smoothly for both train and test, and the solution plot shows that the PINN learned:  
-\( \frac{dy}{dt} = \sin(2\pi t), \quad y(0) = 1 \)  
-almost perfectly. The red dashed line overlaps the true black curve and the training dots.
+<h4>3. <strong>DeepXDE PINNs</strong></h4>
+<p>
+  DeepXDE achieved near-perfect results on the ODE:
+  \[
+    \frac{dy}{dt} = \sin(2\pi t), \quad y(0) = 1
+  \]
+  The red dashed line (prediction) overlaps the true curve nearly everywhere. DeepXDE also streamlines the entire PINN process,
+  letting you define the problem, initial conditions, and even the reference solution in just a few lines.
+</p>
 
-  - Additionally, DeepXDE makes this entire process almost trivial. We can define the ODE, domain, and initial condition in a few lines, and DeepXDE uses TensorFlow’s automatic differentiation to build a loss that enforces the differential equation and boundary conditions. It even lets us plug in an exact solution for immediate error checks. A single call to `dde.saveplot()` then gives us both the loss history and the prediction‑vs‑truth comparison without any extra plotting code.
+<div class="results-img-row">
+  <a href="deepxde_loss.jpg" target="_blank">
+    <img src="deepxde_loss.jpg" alt="DeepXDE Loss Curve">
+  </a>
+  <a href="deepxde_train.jpg" target="_blank">
+    <img src="deepxde_train.jpg" alt="DeepXDE Prediction vs Ground Truth">
+  </a>
+</div>
 
-  - By contrast, if we tried the same thing in Keras or with a hand‑rolled feedforward network, we’d have to write custom loss functions, call gradient routines ourselves, manually sample time points, and wire up all the training loops. DeepXDE abstracts all that away, so we can focus on modeling rather than boilerplate—and for anyone solving ODEs or PDEs, that makes it the fastest, most reliable choice.
+</div>
+</details>
+
   
 <style>
 pre code {
