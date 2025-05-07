@@ -120,15 +120,19 @@ In the future, we would spend more time to figure out how to generalize our neur
 <div class="results-paragraph">
 
 <h4>1. <strong>PINNs built by hand (Non-Keras or XDE)</strong></h4>
+<p>
+  Adopting from <a href="https://colab.research.google.com/drive/12ztGwxR1TK8Ka6H3bOsSt57kB71ieQ-W?usp=sharing" target="_blank">this open-source tutorial</a> on how to build a PINN by hand, we found that this version is significantly less accurate than others for a few reasons:
+</p>
+
 <ul>
-  <li>We found that this version is significantly less accurate than others because:</li>
-  <ul>
-    <li>Instead of using <code>tf.GradientTape()</code>, it uses a finite-difference stencil:
-      <code>dNN ≈ (g(x+ε) − g(x)) / ε</code>. This is slower, less stable, and affected by floating-point noise.</li>
-    <li>We're not using <code>tf.keras.Sequential</code> but hand-coded weights/biases with <code>tf.matmul</code>, which is more error-prone.</li>
-  </ul>
-  <li>The model can only solve ODEs in terms of \( x \), making it inflexible for ODEs involving both \( x \) and \( y \).</li>
+  <li>In our loss function, instead of using <code>tf.GradientTape()</code> like the Keras version, we use a finite‐difference stencil:
+    <code>dNN ≈ (g(x+ε) − g(x)) / ε</code>, which is slower, less stable, and inherently less reliable. Accuracy critically depends on choosing an optimal ε — if it’s too large, important details are lost; too small, and floating-point noise dominates.
+  </li>
+  <li>We are not using any additional deep learning frameworks or packages that are optimized for these tasks, such as Keras or DeepXDE.</li>
+  <li>This model manually defines weights and biases using <code>tf.Variable</code> and performs forward propagation with <code>tf.matmul</code>, which is more error-prone and lower-level than frameworks like <code>tf.keras.Sequential</code>.</li>
+  <li>Our loss function is also hardcoded to use a predefined <code>f(x)</code> function. This limits the model to solving ODEs involving only \( x \). As a result, the model lacks flexibility and cannot handle ODEs that include both \( x \) and \( y \), or other complex variable interactions.</li>
 </ul>
+
 
 <div class="results-img-row">
   <a href="manual_pinn.png" target="_blank">
