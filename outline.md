@@ -125,10 +125,22 @@ almost perfectly. The red dashed line overlaps the true black curve and the trai
 
   - By contrast, if we tried the same thing in Keras or with a hand‑rolled feedforward network, we’d have to write custom loss functions, call gradient routines ourselves, manually sample time points, and wire up all the training loops. DeepXDE abstracts all that away, so we can focus on modeling rather than boilerplate—and for anyone solving ODEs or PDEs, that makes it the fastest, most reliable choice.
   
+<style>
+pre code {
+  display: block;
+  background: #2b2b2b;
+  color: #f8f8f2;
+  padding: 1rem;
+  font-family: Consolas, 'Courier New', monospace;
+  border-radius: 6px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+</style>
+
 <details>
 <summary><strong>DeepXDE Code</strong></summary>
-
-```python
+<pre><code>
 from deepxde.backend.set_default_backend import set_default_backend
 set_default_backend("tensorflow")
 import tensorflow as tf
@@ -152,7 +164,11 @@ ic = dde.IC(geom, lambda t: 1, boundary)
 def true_solution(t):
     return -tf.math.cos(2 * pi * t) / (2 * pi) + (1 + 1 / (2 * pi))
 
-data = dde.data.PDE(geom, ode_system, ic, num_domain=30, num_boundary=2, solution=true_solution, num_test=100)
+data = dde.data.PDE(geom, ode_system, ic,
+                    num_domain=30,
+                    num_boundary=2,
+                    solution=true_solution,
+                    num_test=100)
 
 layer_size = [1, 32, 32, 1]
 activation = "tanh"
@@ -163,12 +179,12 @@ model = dde.Model(data, NN)
 model.compile("adam", lr=0.001)
 losshistory, train_state = model.train(epochs=3000)
 dde.saveplot(losshistory, train_state, issave=False, isplot=True)
-</details> ```
+</code></pre>
+</details>
 
 <details>
 <summary><strong>Keras Code</strong></summary>
-
-```python
+<pre><code>
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -233,12 +249,12 @@ plt.xlabel('t')
 plt.ylabel('u')
 plt.title('Prediction vs Ground Truth')
 plt.show()
-</details> ```
+</code></pre>
+</details>
 
 <details>
 <summary><strong>PINNs Built by Hand (Non-Keras or XDE)</strong></summary>
-
-```python
+<pre><code>
 import tensorflow as tf
 import numpy as np
 
@@ -294,7 +310,8 @@ def train_step():
 
 for _ in range(training_steps):
     train_step()
-</details> ```
+</code></pre>
+</details>
 
 <details>
 <summary>Conclusion/Future Work</summary>
